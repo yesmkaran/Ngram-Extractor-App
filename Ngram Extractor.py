@@ -31,7 +31,7 @@ version_num = (
     input(
         "\nWhich code version do you want to run ('one' or 'two'): ").strip()
     .lower())
-ngram_range = int(input("\nType in max n-gram range number (inclusive): "))
+ngram_range = int(input("\nType in max n-gram level number (inclusive): "))
 text = input("\nEnter a text: ")
 
 # remove punctuations
