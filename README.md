@@ -39,7 +39,7 @@ Before you begin, please ensure you have met the following requirements.
    or download the zip file directly to your machine.
 2. unzip & cd into your project directory.
    ```
-   cd NLP/
+   cd your_project_directory/
    ```
    
 3. Execute the program using the following command.
