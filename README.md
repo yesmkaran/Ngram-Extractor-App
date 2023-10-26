@@ -3,8 +3,8 @@
 
 ## Table of contents
 - [Introduction](#introduction)
-- [Technologies Used](#technologies-used)
-- [Setup](#setup)
+- [Prerequisites](#prerequisites)
+- [Installation Instructions](#installation-instructions)
 
 
 ## Introduction
@@ -25,6 +25,24 @@ like WordNet for n-gram definitions.
 Feel free to dive into two versions of the code, experiment with the provided sample data, and if someone wants to add any new features, 
 then feel free to contact me (patel.karan0496@gmail.com).
 
-## Technologies Used
-The project is created with:
-- PyCharm 2023.2.1
+
+## Prerequisites
+Before you begin, please ensure you have met the following requirements.
+- [Python](https://www.python.org/downloads/) 3.7 or higher
+- Code editor of your choice (Sublime, PyCharm, Visual Studio)
+
+## Installation Instructions
+1. Clone the repository to your local machine.
+   ```
+   git clone https://github.com/yesmkaran/NLP.git
+   ```
+   or download the zip file directly to your machine.
+2. unzip & cd into your project directory.
+   ```
+   cd NLP/
+   ```
+   
+3. Execute the program using the following command.
+   ```
+   python Ngram Extractor.py
+   ```
