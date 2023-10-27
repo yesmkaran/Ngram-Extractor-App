@@ -6,7 +6,6 @@ import nltk
 from nltk.util import ngrams
 from nltk.corpus import wordnet as wn
 
-
 # Run the code below only when the nltk_data folder doesn't exist to
 # downloading the NLTK packages in your system.
 
@@ -32,13 +31,21 @@ version_num = (
         "\nWhich code version do you want to run ('one' or 'two'): ").strip()
     .lower())
 ngram_range = int(input("\nType in max n-gram level number (inclusive): "))
+
 text = input("\nEnter a text: ")
 
-# remove punctuations
-cleaned_text = re.sub(r"[^\w\s]", "", text).split(" ")
+# Remove all characters except letters, digits, spaces, and periods
+text = re.sub(r'[^\w\s.]', '', text)
+
+# Remove leading & trailing spaces
+sentences = [sentence.strip() for sentence in text.split('.') if
+             sentence.strip()]
+
+# Splits each sentence into words by splitting on one or more spaces
+cleaned_sentences = [re.split(r'\s+', sentence) for sentence in sentences]
 
 
-def main(version_num, ngram_range, cleaned_text, file_name1, file_name2):
+def main(version_num, ngram_range, cleaned_sentences, file_name1, file_name2):
     # read in data files &
     # store it in a dictionary
     indexes = f.read_file(file_name1)
@@ -50,39 +57,44 @@ def main(version_num, ngram_range, cleaned_text, file_name1, file_name2):
     # combine data from dicts
     noun_def_dict = f.rearrange_dicts(noun_key_dict, key_def_dict)
 
-    # iterate loop until number of ngrams_range
-    for ngram in range(2, ngram_range + 1):
+    # loop until number of sentences
+    for cleaned_text in cleaned_sentences:
+        print(f"{' '.join(cleaned_text)}")
 
-        print(f"\n{ngram} level n-gram\n")
+        # iterate loop until number of ngrams_range
+        for ngram in range(2, ngram_range + 1):
 
-        # checks version no and then execute the
-        # block accordingly
-        if version_num == "one":
-            for start_idx, end_idx in enumerate(
-                    range(ngram, len(cleaned_text) + 1, 1)):
+            print(f"\n{ngram} level n-gram\n")
 
-                # concatenate words to form n-grams
-                n_gram_phrase = "_".join(cleaned_text[start_idx:end_idx])
+            # checks version no and then execute the
+            # block accordingly
+            if version_num == "one":
+                for start_idx, end_idx in enumerate(
+                        range(ngram, len(cleaned_text) + 1, 1)):
+                    # concatenate words to form n-grams
+                    n_gram_phrase = "_".join(cleaned_text[start_idx:end_idx])
 
-                # find the def of a given n-gram in a dictionary
-                # if not, then return a blank string
-                definition = noun_def_dict.get(n_gram_phrase, '')
-                print(n_gram_phrase, definition, sep=", ")
+                    # find the def of a given n-gram in a dictionary
+                    # if not, then return a blank string
+                    definition = noun_def_dict.get(n_gram_phrase, '')
+                    print(n_gram_phrase, definition, sep=", ")
 
-        elif version_num == "two":
-            n_grams = ngrams(cleaned_text, ngram)
-            words = ["_".join(gram) for gram in n_grams]
+            elif version_num == "two":
+                n_grams = ngrams(cleaned_text, ngram)
+                words = ["_".join(gram) for gram in n_grams]
 
-            # find word def in a WordNet database
-            # using NLTK library
-            for word in words:
-                definition = f.word_definition(word)
-                print(f"{word}, {definition}" if definition else f"{word},")
+                # find word def in a WordNet database
+                # using NLTK library
+                for word in words:
+                    definition = f.word_definition(word)
+                    print(f"{word}, {definition}" if definition else f"{word},")
 
-        else:
-            print("Invalid input. Please enter either 'one' or 'two'.")
-            return
+            else:
+                print("Invalid input. Please enter either 'one' or 'two'.")
+                return
+        print("\n")
 
 
 if __name__ == "__main__":
-    main(version_num, ngram_range, cleaned_text, "NounsIndex", "NounsData")
+    main(version_num, ngram_range, cleaned_sentences, "NounsIndex",
+         "NounsData")
